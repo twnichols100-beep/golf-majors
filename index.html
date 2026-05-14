@@ -7,665 +7,192 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;font-size:16px}
-body{
-  background:#0d1f0f;
-  color:#f5f0e8;
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
-  min-height:100vh;
-}
-
-/* ---- HEADER ---- */
-.hdr{
-  background:#162b18;
-  border-bottom:1px solid rgba(201,168,76,0.3);
-  padding:16px 16px 0;
-  position:sticky;top:0;z-index:100;
-}
+body{background:#0d1f0f;color:#f5f0e8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;min-height:100vh;}
+.hdr{background:#162b18;border-bottom:1px solid rgba(201,168,76,0.3);padding:16px 16px 0;position:sticky;top:0;z-index:100;}
 .hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .hdr-title{font-size:20px;font-weight:700;color:#c9a84c;letter-spacing:-0.3px}
 .hdr-sub{font-size:11px;color:#7a9e7c;margin-top:2px;letter-spacing:0.06em;text-transform:uppercase}
 .hdr-btns{display:flex;gap:8px;align-items:center}
 .sync-dot{width:8px;height:8px;border-radius:50%;background:#4a9454;flex-shrink:0}
-.sync-dot.off{background:#888}
-.sync-dot.err{background:#c0392b}
-.admin-btn{
-  border:1px solid rgba(201,168,76,0.4);border-radius:6px;
-  color:#c9a84c;font-size:11px;padding:5px 10px;cursor:pointer;
-  background:none;letter-spacing:0.05em;text-transform:uppercase;
-}
-
-/* ---- NAV ---- */
+.sync-dot.off{background:#888}.sync-dot.err{background:#c0392b}
+.live-badge{background:rgba(192,57,43,0.2);border:1px solid rgba(192,57,43,0.4);color:#e07060;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;letter-spacing:0.06em;animation:pulse 2s infinite}
+.live-badge.inactive{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:#7a9e7c;animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
 .nav{display:flex;overflow-x:auto;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
-.ntab{
-  flex:1;min-width:70px;padding:10px 6px;text-align:center;
-  font-size:12px;font-weight:500;color:#7a9e7c;cursor:pointer;
-  border:none;border-bottom:2px solid transparent;
-  background:none;color:#7a9e7c;font-family:inherit;
-  white-space:nowrap;transition:all 0.15s;letter-spacing:0.02em;
-}
+.ntab{flex:1;min-width:60px;padding:10px 4px;text-align:center;font-size:11px;font-weight:500;color:#7a9e7c;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;font-family:inherit;white-space:nowrap;transition:all 0.15s;letter-spacing:0.02em;}
 .ntab.active{color:#c9a84c;border-bottom-color:#c9a84c}
-
-/* ---- MAIN ---- */
 .main{padding:16px;max-width:500px;margin:0 auto}
 .panel{display:none}.panel.active{display:block}
-
-/* ---- METRIC STRIP ---- */
 .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
 .metric{background:#1e3d21;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 12px;text-align:center}
 .metric-lbl{font-size:10px;color:#7a9e7c;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px}
 .metric-val{font-size:20px;font-weight:700;color:#c9a84c}
-
-/* ---- MAJOR PILLS ---- */
 .pills{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:16px;padding-bottom:2px}
 .pills::-webkit-scrollbar{display:none}
-.pill{
-  flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:12px;
-  font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,0.1);
-  color:#7a9e7c;background:none;transition:all 0.15s;
-  font-family:inherit;white-space:nowrap;
-}
+.pill{flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,0.1);color:#7a9e7c;background:none;transition:all 0.15s;font-family:inherit;white-space:nowrap;}
 .pill.active{background:#c9a84c;color:#0d1f0f;border-color:#c9a84c;font-weight:700}
-
-/* ---- LEADERBOARD ---- */
 .lb-list{display:flex;flex-direction:column;gap:8px}
-.lb-row{
-  background:#1e3d21;border:1px solid rgba(255,255,255,0.07);
-  border-radius:12px;padding:12px 14px;
-  display:grid;grid-template-columns:36px 1fr auto;
-  align-items:center;gap:10px;
-}
+.lb-row{background:#1e3d21;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:10px;}
 .lb-row.leader{border-color:rgba(201,168,76,0.4)}
 .lb-pos{text-align:center;font-size:20px;font-weight:700;color:#7a9e7c;line-height:1}
 .lb-pos.gold{color:#c9a84c;font-size:22px}
 .lb-name{font-size:15px;font-weight:600;color:#f5f0e8;line-height:1.2}
 .lb-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
-.chip{
-  font-size:11px;padding:2px 7px;border-radius:4px;
-  background:#2d5c32;color:#d4ccba;display:inline-flex;align-items:center;gap:3px;
-}
+.chip{font-size:11px;padding:2px 7px;border-radius:4px;background:#2d5c32;color:#d4ccba;display:inline-flex;align-items:center;gap:3px;}
 .chip.cap{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.35);color:#e8c97a}
 .chip.cut{background:rgba(192,57,43,0.2);color:#e07060}
 .chip b{color:#f5f0e8;font-weight:700}
 .lb-score-num{font-size:26px;font-weight:700;color:#f5f0e8;text-align:right;line-height:1}
 .lb-score-lbl{font-size:10px;color:#7a9e7c;text-align:right;margin-top:2px;letter-spacing:0.05em}
-.fl-badge{
-  font-size:9px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);
-  color:#c9a84c;padding:1px 5px;border-radius:3px;margin-left:5px;
-  letter-spacing:0.04em;text-transform:uppercase;vertical-align:middle;
-}
+.fl-badge{font-size:9px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);color:#c9a84c;padding:1px 5px;border-radius:3px;margin-left:5px;letter-spacing:0.04em;text-transform:uppercase;vertical-align:middle;}
 .empty{text-align:center;color:#7a9e7c;font-size:13px;padding:40px 20px;line-height:1.7}
-
-/* ---- OVERALL ---- */
+.live-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.live-title{font-size:13px;font-weight:600;color:#f5f0e8}
+.live-updated{font-size:11px;color:#7a9e7c}
+.btn-refresh{background:none;border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#7a9e7c;font-size:11px;padding:5px 10px;cursor:pointer;font-family:inherit;}
+.live-table{width:100%;border-collapse:collapse;font-size:13px}
+.live-table th{padding:8px;text-align:left;font-size:10px;font-weight:600;color:#7a9e7c;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid rgba(255,255,255,0.08);}
+.live-table th:last-child{text-align:right}
+.live-table td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.06);color:#d4ccba;vertical-align:middle;}
+.live-table td:last-child{text-align:right;font-weight:600;color:#f5f0e8}
+.live-table tr.in-picks td{color:#f5f0e8}
+.live-table tr.in-picks td:first-child{color:#c9a84c;font-weight:700}
+.pick-indicator{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.pick-for{font-size:10px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.25);color:#c9a84c;padding:1px 5px;border-radius:3px;}
+.loading-state{text-align:center;color:#7a9e7c;font-size:13px;padding:30px 20px}
+.spin{display:inline-block;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.section-lbl{font-size:10px;font-weight:600;color:#7a9e7c;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;margin-top:16px}
+.comp-impact{background:#1e3d21;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.comp-impact-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.comp-impact-name{font-size:14px;font-weight:600;color:#f5f0e8}
+.comp-impact-score{font-size:22px;font-weight:700;color:#c9a84c}
+.comp-golfers{display:flex;flex-direction:column;gap:4px}
+.comp-golfer-row{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.comp-golfer-name{color:#d4ccba;display:flex;align-items:center;gap:5px}
+.comp-golfer-pos{font-weight:700;color:#f5f0e8}
+.comp-golfer-pos.cut{color:#e07060}
+.cap-label{font-size:9px;background:rgba(201,168,76,0.15);color:#c9a84c;padding:1px 4px;border-radius:3px;border:1px solid rgba(201,168,76,0.3);}
 .ov-wrap{overflow-x:auto}
 .ov-table{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
-.ov-table th{
-  padding:8px 8px;text-align:right;font-size:10px;font-weight:600;
-  color:#7a9e7c;text-transform:uppercase;letter-spacing:0.05em;
-  border-bottom:1px solid rgba(255,255,255,0.08);white-space:nowrap;
-}
+.ov-table th{padding:8px;text-align:right;font-size:10px;font-weight:600;color:#7a9e7c;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid rgba(255,255,255,0.08);white-space:nowrap;}
 .ov-table th:first-child,.ov-table th:nth-child(2){text-align:left}
-.ov-table td{
-  padding:11px 8px;text-align:right;
-  border-bottom:1px solid rgba(255,255,255,0.06);color:#d4ccba;
-}
+.ov-table td{padding:11px 8px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.06);color:#d4ccba;}
 .ov-table td:first-child{text-align:center;font-size:16px;font-weight:700;color:#7a9e7c}
 .ov-table td:nth-child(2){text-align:left;font-weight:600;color:#f5f0e8}
 .ov-table tr.leader td:first-child{color:#c9a84c}
 .ov-table .tot{font-weight:700;color:#c9a84c;font-size:14px}
 .tbd{color:#2d5c32;font-size:12px}
-
-/* ---- ADMIN GATE ---- */
-.gate{background:#1e3d21;border:1px solid rgba(201,168,76,0.3);border-radius:14px;padding:20px;margin-bottom:16px}
-.gate h3{color:#c9a84c;font-size:16px;margin-bottom:6px}
-.gate p{font-size:13px;color:#7a9e7c;margin-bottom:14px;line-height:1.6}
-.pin-row{display:flex;gap:8px}
-.pin-in{
-  flex:1;background:#162b18;border:1px solid rgba(255,255,255,0.1);
-  border-radius:8px;color:#f5f0e8;font-size:18px;padding:10px 14px;
-  font-family:inherit;text-align:center;letter-spacing:0.2em;
-}
-.pin-in:focus{outline:none;border-color:rgba(201,168,76,0.5)}
-.btn-gold{
-  background:#c9a84c;color:#0d1f0f;border:none;border-radius:8px;
-  font-size:13px;font-weight:700;padding:10px 18px;cursor:pointer;
-  font-family:inherit;white-space:nowrap;
-}
-.btn-ghost{
-  background:none;color:#7a9e7c;border:1px solid rgba(255,255,255,0.1);
-  border-radius:8px;font-size:12px;padding:8px 14px;cursor:pointer;font-family:inherit;
-}
-.pin-err{font-size:12px;color:#e74c3c;margin-top:6px;display:none}
-
-/* ---- EDITOR ---- */
 .ed-player{background:#1e3d21;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px;margin-bottom:10px}
 .ed-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .ed-name{font-weight:600;font-size:15px;color:#f5f0e8}
 .cap-wrap{display:flex;align-items:center;gap:6px;font-size:12px;color:#7a9e7c}
-.cap-wrap select{
-  background:#162b18;border:1px solid rgba(255,255,255,0.12);
-  border-radius:6px;color:#c9a84c;font-size:12px;padding:4px 8px;font-family:inherit;
-}
+.cap-wrap select{background:#162b18;border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#c9a84c;font-size:12px;padding:4px 8px;font-family:inherit;}
 .ed-row{display:grid;grid-template-columns:1fr 80px;gap:6px;margin-bottom:6px}
 .ed-lbl{font-size:11px;color:#7a9e7c;margin-bottom:3px}
-.finput{
-  width:100%;background:#162b18;border:1px solid rgba(255,255,255,0.1);
-  border-radius:8px;color:#f5f0e8;font-size:14px;padding:8px 10px;font-family:inherit;
-}
+.finput{width:100%;background:#162b18;border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#f5f0e8;font-size:14px;padding:8px 10px;font-family:inherit;}
 .finput:focus{outline:none;border-color:rgba(201,168,76,0.5)}
 .finput.pos{text-align:center}
-.save-bar{
-  position:sticky;bottom:0;background:#162b18;
-  border-top:1px solid rgba(201,168,76,0.25);
-  padding:12px 16px;display:flex;gap:8px;margin:0 -16px;
-}
+.save-bar{position:sticky;bottom:0;background:#162b18;border-top:1px solid rgba(201,168,76,0.25);padding:12px 16px;display:flex;gap:8px;margin:0 -16px;}
 .save-bar .btn-gold{flex:1;padding:13px;font-size:14px}
-
-/* ---- RULES ---- */
+.btn-gold{background:#c9a84c;color:#0d1f0f;border:none;border-radius:8px;font-size:13px;font-weight:700;padding:10px 18px;cursor:pointer;font-family:inherit;white-space:nowrap;}
 .rule-card{background:#1e3d21;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px;margin-bottom:12px}
 .rule-card h3{color:#c9a84c;font-size:14px;margin-bottom:10px;font-weight:600}
 .rule-card p,.rule-card li{font-size:13px;color:#d4ccba;line-height:1.7}
 .rule-card ul{padding-left:18px}
 .rule-card li{margin-bottom:3px}
-
-/* ---- TOAST ---- */
-.toast{
-  position:fixed;bottom:80px;left:50%;
-  transform:translateX(-50%) translateY(20px);
-  background:#c9a84c;color:#0d1f0f;padding:10px 20px;
-  border-radius:20px;font-size:13px;font-weight:700;
-  opacity:0;transition:all 0.25s;pointer-events:none;
-  white-space:nowrap;z-index:999;
-}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#c9a84c;color:#0d1f0f;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:700;opacity:0;transition:all 0.25s;pointer-events:none;white-space:nowrap;z-index:999;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ---- SUPABASE BANNER ---- */
-.sb-banner{
-  background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.3);
-  border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:12px;
-  color:#c9a84c;line-height:1.6;display:none;
-}
-.sb-banner a{color:#e8c97a}
-.sb-banner code{background:rgba(0,0,0,0.3);padding:1px 5px;border-radius:3px;font-size:11px}
 </style>
 </head>
 <body>
-
-<!-- ============================================================
-  SETUP: Replace the two values below with your Supabase details.
-  See instructions at the bottom of this file.
-============================================================= -->
 <script>
-const SUPABASE_URL = 'https://oociymasrwjpvfumntve.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9vY2l5bWFzcndqcHZmdW1udHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjU0MTEsImV4cCI6MjA5NDI0MTQxMX0.l3Ywn-LvzkjI4-wF8MNJLRpu8ljdUMOW3T5HnCNif5c';
-const ADMIN_PIN = '1234'; // change this to whatever you want
+const SUPABASE_URL='https://oociymasrwjpvfumntve.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9vY2l5bWFzcndqcHZmdW1udHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjU0MTEsImV4cCI6MjA5NDI0MTQxMX0.l3Ywn-LvzkjI4-wF8MNJLRpu8ljdUMOW3T5HnCNif5c';
 </script>
-<!-- ============================================================ -->
-
 <div class="hdr">
-  <div class="hdr-top">
-    <div>
-      <div class="hdr-title">⛳ Majors 2026</div>
-      <div class="hdr-sub">£200 Pot &nbsp;·&nbsp; 4 Majors</div>
-    </div>
-    <div class="hdr-btns">
-      <div class="sync-dot off" id="sync-dot" title="Sync status"></div>
-      <button class="admin-btn" onclick="goAdmin()">Admin</button>
-    </div>
-  </div>
-  <nav class="nav">
-    <button class="ntab active" onclick="showTab('leaderboard',this)">Leaderboard</button>
-    <button class="ntab" onclick="showTab('overall',this)">Overall</button>
-    <button class="ntab" onclick="showTab('admin',this)">Scores</button>
-    <button class="ntab" onclick="showTab('rules',this)">Rules</button>
-  </nav>
+<div class="hdr-top">
+<div><div class="hdr-title">⛳ Majors 2026</div><div class="hdr-sub">£200 Pot · 4 Majors</div></div>
+<div class="hdr-btns"><div class="sync-dot off" id="sync-dot"></div><div class="live-badge inactive" id="live-badge">LIVE</div></div>
 </div>
-
+<nav class="nav">
+<button class="ntab active" onclick="showTab('leaderboard',this)">Leaderboard</button>
+<button class="ntab" onclick="showTab('live',this)">Live ⚡</button>
+<button class="ntab" onclick="showTab('overall',this)">Overall</button>
+<button class="ntab" onclick="showTab('scores',this)">Scores</button>
+<button class="ntab" onclick="showTab('rules',this)">Rules</button>
+</nav>
+</div>
 <div class="main">
-
-  <!-- LEADERBOARD -->
-  <div id="tab-leaderboard" class="panel active">
-    <div id="sb-setup-banner" class="sb-banner">
-      <strong>Live sync not set up yet.</strong> Scores are stored locally on this device only.
-      Open this file in a text editor, find <code>YOUR_SUPABASE_URL</code> near the top, and replace both values with your Supabase project details.
-    </div>
-    <div class="metrics">
-      <div class="metric"><div class="metric-lbl">Pot</div><div class="metric-val">£200</div></div>
-      <div class="metric"><div class="metric-lbl">Players</div><div class="metric-val">5</div></div>
-      <div class="metric"><div class="metric-lbl">Majors left</div><div class="metric-val" id="majors-left">—</div></div>
-    </div>
-    <div class="pills" id="lb-pills"></div>
-    <div class="lb-list" id="lb-list"></div>
-  </div>
-
-  <!-- OVERALL -->
-  <div id="tab-overall" class="panel">
-    <div class="ov-wrap">
-      <table class="ov-table">
-        <thead>
-          <tr>
-            <th>#</th><th>Player</th>
-            <th>Masters</th><th>PGA</th><th>US</th><th>Open</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody id="ov-body"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ADMIN / SCORES -->
-  <div id="tab-admin" class="panel">
-    <div id="gate-wrap">
-      <div class="gate">
-        <h3>Admin access</h3>
-        <p>Enter your PIN to update picks and scores. Everyone else can view the leaderboard without logging in.</p>
-        <div class="pin-row">
-          <input class="pin-in" id="pin-field" type="number" placeholder="PIN" />
-          <button class="btn-gold" onclick="checkPin()">Enter</button>
-        </div>
-        <div class="pin-err" id="pin-err">Wrong PIN.</div>
-      </div>
-    </div>
-    <div id="admin-editor" style="display:none">
-      <div class="pills" id="edit-pills"></div>
-      <div id="editor-form"></div>
-      <div class="save-bar">
-        <button class="btn-gold" onclick="saveScores()">Save scores</button>
-        <button class="btn-ghost" onclick="lockAdmin()">Lock</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- RULES -->
-  <div id="tab-rules" class="panel">
-    <div class="rule-card">
-      <h3>Format</h3>
-      <ul>
-        <li>4 majors — The Masters, PGA Championship, U.S. Open, The Open</li>
-        <li>£10 per major each. £200 total pot</li>
-        <li>Pick 3 golfers before each major and nominate one as captain</li>
-      </ul>
-    </div>
-    <div class="rule-card">
-      <h3>Scoring</h3>
-      <ul>
-        <li>Add up finishing positions — 1st = 1pt, 2nd = 2pts, etc.</li>
-        <li>Missed cut = 50 points</li>
-        <li>Your captain's score counts double (added on top)</li>
-        <li>Tied positions use the leaderboard number as shown — T5 = 5pts</li>
-        <li>Lowest total across all 4 majors wins the £200</li>
-      </ul>
-    </div>
-    <div class="rule-card">
-      <h3>Freeloaders</h3>
-      <p>Hawk and Mole pay in but their scores don't count for the prize. Listed for the banter.</p>
-    </div>
-  </div>
-
+<div id="tab-leaderboard" class="panel active">
+<div class="metrics">
+<div class="metric"><div class="metric-lbl">Pot</div><div class="metric-val">£200</div></div>
+<div class="metric"><div class="metric-lbl">Players</div><div class="metric-val">5</div></div>
+<div class="metric"><div class="metric-lbl">Majors left</div><div class="metric-val" id="majors-left">—</div></div>
 </div>
-
+<div class="pills" id="lb-pills"></div>
+<div class="lb-list" id="lb-list"></div>
+</div>
+<div id="tab-live" class="panel">
+<div class="live-header">
+<div><div class="live-title">Live tournament positions</div><div class="live-updated" id="live-updated">Tap refresh to load</div></div>
+<button class="btn-refresh" onclick="fetchLive()">↻ Refresh</button>
+</div>
+<div id="live-impact"></div>
+<div id="live-field-label" class="section-lbl" style="display:none">Full leaderboard — your picks highlighted</div>
+<div id="live-field"></div>
+</div>
+<div id="tab-overall" class="panel">
+<div class="ov-wrap"><table class="ov-table"><thead><tr><th>#</th><th>Player</th><th>Masters</th><th>PGA</th><th>US</th><th>Open</th><th>Total</th></tr></thead><tbody id="ov-body"></tbody></table></div>
+</div>
+<div id="tab-scores" class="panel">
+<div class="pills" id="edit-pills"></div>
+<div id="editor-form"></div>
+<div class="save-bar"><button class="btn-gold" onclick="saveScores()">Save scores</button></div>
+</div>
+<div id="tab-rules" class="panel">
+<div class="rule-card"><h3>Format</h3><ul><li>4 majors — The Masters, PGA Championship, U.S. Open, The Open</li><li>£10 per major each. £200 total pot</li><li>Pick 3 golfers before each major and nominate one as captain</li></ul></div>
+<div class="rule-card"><h3>Scoring</h3><ul><li>Add up finishing positions — 1st = 1pt, 2nd = 2pts, etc.</li><li>Missed cut = 70 points</li><li>Your captain's score counts double (added on top)</li><li>Tied positions use the leaderboard number as shown — T5 = 5pts</li><li>Lowest total across all 4 majors wins the £200</li></ul></div>
+<div class="rule-card"><h3>Freeloaders</h3><p>Hawk and Mole pay in but their scores don't count for the prize. Listed for the banter.</p></div>
+</div>
+</div>
 <div class="toast" id="toast"></div>
-
 <script>
-// ---- DATA ----
-const MAJORS = ['masters','pga','us','open'];
-const MNAMES = {masters:'Masters',pga:'PGA Champ.',us:'U.S. Open',open:'The Open'};
-const MFULL  = {masters:'The Masters',pga:'PGA Championship',us:'U.S. Open',open:'The Open Championship'};
-const PLAYERS = ['Hawk','Bison','Samo','Nico','Mole'];
-const FREELOADERS = ['Hawk','Mole'];
-
-const DEFAULTS = {
-  masters:{
-    Hawk: {g1:'Aberg',     p1:21, g2:'Rose',       p2:3,  g3:'McIntyre',  p3:50, captain:1},
-    Bison:{g1:'Fitzpatrick',p1:18,g2:'DeChambeau', p2:50, g3:'McIlroy',   p3:1,  captain:3},
-    Samo: {g1:'Reed',      p1:12, g2:'Morikawa',   p2:7,  g3:'Scheffler', p3:2,  captain:3},
-    Nico: {g1:'Schauffele',p1:9,  g2:'Min Woo Lee',p2:50, g3:'McIlroy',   p3:1,  captain:3},
-    Mole: {g1:'Fitzpatrick',p1:18,g2:'DeChambeau', p2:50, g3:'Scheffler', p3:2,  captain:3},
-  },
-  pga: {Hawk:null,Bison:null,Samo:null,Nico:null,Mole:null},
-  us:  {Hawk:null,Bison:null,Samo:null,Nico:null,Mole:null},
-  open:{Hawk:null,Bison:null,Samo:null,Nico:null,Mole:null},
-};
-
-let data = JSON.parse(JSON.stringify(DEFAULTS));
-let adminUnlocked = false;
-let curLb = 'masters';
-let curEdit = 'masters';
-let supabaseReady = false;
-
-// ---- SUPABASE ----
-async function initSupabase(){
-  if(SUPABASE_URL === 'YOUR_SUPABASE_URL'){
-    document.getElementById('sb-setup-banner').style.display='block';
-    setSyncDot('off');
-    loadLocal();
-    return;
-  }
-  try{
-    // Pull latest data from Supabase
-    const res = await sbFetch('GET',`/rest/v1/scores?select=*`);
-    if(res.ok){
-      const rows = await res.json();
-      if(rows && rows.length > 0){
-        // Merge rows into data object
-        rows.forEach(row => {
-          if(data[row.major] && PLAYERS.includes(row.player)){
-            data[row.major][row.player] = row.picks ? JSON.parse(row.picks) : null;
-          }
-        });
-      }
-      supabaseReady = true;
-      setSyncDot('on');
-    } else {
-      throw new Error('fetch failed');
-    }
-  } catch(e){
-    console.warn('Supabase error:',e);
-    loadLocal();
-    setSyncDot('err');
-  }
-  renderAll();
-}
-
-async function sbFetch(method, path, body){
-  return fetch(SUPABASE_URL + path, {
-    method,
-    headers:{
-      'apikey': SUPABASE_ANON_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-      'Content-Type': 'application/json',
-      'Prefer': method==='POST' ? 'resolution=merge-duplicates' : '',
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
-}
-
-async function pushToSupabase(major){
-  if(!supabaseReady) return;
-  const rows = PLAYERS.map(p => ({
-    major,
-    player: p,
-    picks: data[major][p] ? JSON.stringify(data[major][p]) : null,
-  }));
-  try{
-    const res = await sbFetch('POST', '/rest/v1/scores', rows);
-    if(res.ok){
-      setSyncDot('on');
-    } else {
-      setSyncDot('err');
-    }
-  } catch(e){
-    setSyncDot('err');
-  }
-}
-
-function setSyncDot(state){
-  const d = document.getElementById('sync-dot');
-  d.className = 'sync-dot' + (state==='on' ? '' : state==='err' ? ' err' : ' off');
-  d.title = state==='on' ? 'Live sync active' : state==='err' ? 'Sync error — check connection' : 'Not synced';
-}
-
-// ---- LOCAL FALLBACK ----
-function loadLocal(){
-  try{
-    const s = localStorage.getItem('golf2026');
-    if(s) data = JSON.parse(s);
-  } catch(e){}
-}
-function saveLocal(){
-  try{ localStorage.setItem('golf2026', JSON.stringify(data)); } catch(e){}
-}
-
-// ---- SCORING ----
-function calcScore(d){
-  if(!d || d.p1===null || d.p2===null || d.p3===null) return null;
-  if(isNaN(d.p1) || isNaN(d.p2) || isNaN(d.p3)) return null;
-  const cap = d.captain===1 ? d.p1 : d.captain===2 ? d.p2 : d.p3;
-  return d.p1 + d.p2 + d.p3 + cap;
-}
-function capName(d){
-  if(!d) return '';
-  return d.captain===1 ? d.g1 : d.captain===2 ? d.g2 : d.g3;
-}
-function makeChip(g, p, isCap){
-  const cut = p===50;
-  const cls = isCap ? 'chip cap' : cut ? 'chip cut' : 'chip';
-  const posStr = (p!==null && p!=='') ? `<b>${cut?'MC':'T'+p}</b>` : '';
-  return `<span class="${cls}">${g}${isCap?' ©':''} ${posStr}</span>`;
-}
-
-// ---- LEADERBOARD ----
-function renderPills(containerId, cur, onclick){
-  document.getElementById(containerId).innerHTML = MAJORS.map(m=>
-    `<button class="pill ${m===cur?'active':''}" onclick="${onclick}('${m}')">${MNAMES[m]}</button>`
-  ).join('');
-}
-function renderLeaderboard(){
-  renderPills('lb-pills', curLb, 'switchLb');
-  const rows = PLAYERS.map(p=>({
-    name:p, d:data[curLb][p], score:calcScore(data[curLb][p]), fl:FREELOADERS.includes(p)
-  })).sort((a,b)=>{
-    if(a.score===null && b.score===null) return 0;
-    if(a.score===null) return 1;
-    if(b.score===null) return -1;
-    return a.score - b.score;
-  });
-  const hasData = rows.some(r=>r.score!==null);
-  const el = document.getElementById('lb-list');
-  if(!hasData){
-    el.innerHTML=`<div class="empty">No scores yet for ${MFULL[curLb]}.<br>Use the Scores tab to add picks and positions.</div>`;
-    return;
-  }
-  el.innerHTML = rows.map((r,i)=>{
-    const leader = i===0 && r.score!==null;
-    const posEl = r.score===null ? `<div class="lb-pos">—</div>`
-      : `<div class="lb-pos ${leader?'gold':''}">${leader?'🏆':i+1}</div>`;
-    if(!r.d || r.score===null){
-      return `<div class="lb-row">
-        ${posEl}
-        <div><div class="lb-name">${r.name}${r.fl?'<span class="fl-badge">free</span>':''}</div>
-        <div class="lb-chips"><span style="font-size:12px;color:#7a9e7c">No picks</span></div></div>
-        <div class="lb-score-num tbd">—</div>
-      </div>`;
-    }
-    const chips = [
-      makeChip(r.d.g1, r.d.p1, r.d.captain===1),
-      makeChip(r.d.g2, r.d.p2, r.d.captain===2),
-      makeChip(r.d.g3, r.d.p3, r.d.captain===3),
-    ].join('');
-    return `<div class="lb-row ${leader?'leader':''}">
-      ${posEl}
-      <div>
-        <div class="lb-name">${r.name}${r.fl?'<span class="fl-badge">free</span>':''}</div>
-        <div class="lb-chips">${chips}</div>
-      </div>
-      <div>
-        <div class="lb-score-num">${r.score}</div>
-        <div class="lb-score-lbl">pts</div>
-      </div>
-    </div>`;
-  }).join('');
-  // majors remaining
-  const done = MAJORS.filter(m=>PLAYERS.some(p=>data[m][p]!==null&&calcScore(data[m][p])!==null)).length;
-  document.getElementById('majors-left').textContent = 4 - done;
-}
-function switchLb(m){ curLb=m; renderLeaderboard(); }
-
-// ---- OVERALL ----
-function renderOverall(){
-  const rows = PLAYERS.map(p=>{
-    const scores = MAJORS.map(m=>calcScore(data[m][p]));
-    const total = scores.some(s=>s!==null) ? scores.reduce((a,b)=>a+(b||0),0) : null;
-    return {name:p, scores, total, fl:FREELOADERS.includes(p)};
-  }).sort((a,b)=>{
-    if(a.total===null&&b.total===null) return 0;
-    if(a.total===null) return 1;
-    if(b.total===null) return -1;
-    return a.total - b.total;
-  });
-  document.getElementById('ov-body').innerHTML = rows.map((r,i)=>{
-    const leader = i===0 && r.total!==null;
-    const pos = r.total!==null ? (i===0?'🏆':i+1) : '—';
-    const cells = r.scores.map(s=>`<td>${s!==null?s:'<span class="tbd">—</span>'}</td>`).join('');
-    return `<tr class="${leader?'leader':''}">
-      <td>${pos}</td>
-      <td>${r.name}${r.fl?'<span class="fl-badge">free</span>':''}</td>
-      ${cells}
-      <td class="tot">${r.total!==null?r.total:'<span class="tbd">—</span>'}</td>
-    </tr>`;
-  }).join('');
-}
-
-// ---- ADMIN ----
-function goAdmin(){
-  showTab('admin', document.querySelectorAll('.ntab')[2]);
-  if(!adminUnlocked) setTimeout(()=>document.getElementById('pin-field').focus(),100);
-}
-function checkPin(){
-  if(document.getElementById('pin-field').value === String(ADMIN_PIN)){
-    adminUnlocked = true;
-    document.getElementById('gate-wrap').style.display='none';
-    document.getElementById('admin-editor').style.display='block';
-    renderEditPills();
-    renderEditor();
-  } else {
-    document.getElementById('pin-err').style.display='block';
-    document.getElementById('pin-field').value='';
-  }
-}
-function lockAdmin(){
-  adminUnlocked=false;
-  document.getElementById('gate-wrap').style.display='block';
-  document.getElementById('admin-editor').style.display='none';
-  document.getElementById('pin-field').value='';
-  document.getElementById('pin-err').style.display='none';
-}
-function renderEditPills(){ renderPills('edit-pills', curEdit, 'switchEdit'); }
-function switchEdit(m){ curEdit=m; renderEditPills(); renderEditor(); }
-function renderEditor(){
-  document.getElementById('editor-form').innerHTML = PLAYERS.map(p=>{
-    const d = data[curEdit][p] || {g1:'',p1:'',g2:'',p2:'',g3:'',p3:'',captain:1};
-    const capOpts = [1,2,3].map(n=>`<option value="${n}" ${d.captain==n?'selected':''}>G${n}</option>`).join('');
-    return `<div class="ed-player">
-      <div class="ed-hdr">
-        <span class="ed-name">${p}${FREELOADERS.includes(p)?'<span class="fl-badge">free</span>':''}</span>
-        <div class="cap-wrap">Cap: <select id="${p}-cap">${capOpts}</select></div>
-      </div>
-      <div class="ed-lbl">Golfer 1 &nbsp; Position</div>
-      <div class="ed-row">
-        <input class="finput" id="${p}-g1" value="${d.g1||''}" placeholder="Name" />
-        <input class="finput pos" id="${p}-p1" type="number" value="${d.p1!==null&&d.p1!==''?d.p1:''}" placeholder="e.g. 5" />
-      </div>
-      <div class="ed-lbl">Golfer 2 &nbsp; Position</div>
-      <div class="ed-row">
-        <input class="finput" id="${p}-g2" value="${d.g2||''}" placeholder="Name" />
-        <input class="finput pos" id="${p}-p2" type="number" value="${d.p2!==null&&d.p2!==''?d.p2:''}" placeholder="e.g. 14" />
-      </div>
-      <div class="ed-lbl">Golfer 3 &nbsp; Position</div>
-      <div class="ed-row">
-        <input class="finput" id="${p}-g3" value="${d.g3||''}" placeholder="Name" />
-        <input class="finput pos" id="${p}-p3" type="number" value="${d.p3!==null&&d.p3!==''?d.p3:''}" placeholder="50 = MC" />
-      </div>
-    </div>`;
-  }).join('');
-}
-async function saveScores(){
-  PLAYERS.forEach(p=>{
-    const g1=(document.getElementById(`${p}-g1`)?.value||'').trim();
-    const g2=(document.getElementById(`${p}-g2`)?.value||'').trim();
-    const g3=(document.getElementById(`${p}-g3`)?.value||'').trim();
-    const p1=parseInt(document.getElementById(`${p}-p1`)?.value);
-    const p2=parseInt(document.getElementById(`${p}-p2`)?.value);
-    const p3=parseInt(document.getElementById(`${p}-p3`)?.value);
-    const cap=parseInt(document.getElementById(`${p}-cap`)?.value)||1;
-    if(g1||g2||g3){
-      data[curEdit][p]={
-        g1, p1:isNaN(p1)?null:p1,
-        g2, p2:isNaN(p2)?null:p2,
-        g3, p3:isNaN(p3)?null:p3,
-        captain:cap
-      };
-    }
-  });
-  saveLocal();
-  await pushToSupabase(curEdit);
-  renderLeaderboard();
-  renderOverall();
-  showToast('Saved ✓');
-}
-
-// ---- NAV ----
-function showTab(id, btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  if(btn) btn.classList.add('active');
-  if(id==='overall') renderOverall();
-  if(id==='admin' && adminUnlocked){ renderEditPills(); renderEditor(); }
-}
-
-// ---- TOAST ----
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2000);
-}
-
-function renderAll(){
-  renderLeaderboard();
-  renderOverall();
-}
-
-// ---- INIT ----
-document.getElementById('pin-field').addEventListener('keydown',e=>{if(e.key==='Enter')checkPin()});
-initSupabase();
+const MAJORS=['masters','pga','us','open'];
+const MNAMES={masters:'Masters',pga:'PGA Champ.',us:'U.S. Open',open:'The Open'};
+const MFULL={masters:'The Masters',pga:'PGA Championship',us:'U.S. Open',open:'The Open Championship'};
+const PLAYERS=['Hawk','Bison','Samo','Nico','Mole'];
+const FREELOADERS=['Hawk','Mole'];
+const MISSED_CUT=70;
+const LIVE_PICKS={pga:{Hawk:{g1:'Scottie Scheffler',g2:'Jon Rahm',g3:'Xander Schauffele',captain:1},Bison:{g1:'Rory McIlroy',g2:'Ludvig Aberg',g3:'Russell Henley',captain:1},Samo:{g1:'Scottie Scheffler',g2:'Xander Schauffele',g3:'Ludvig Aberg',captain:1},Nico:{g1:'Scottie Scheffler',g2:'Tyrrell Hatton',g3:'Collin Morikawa',captain:1},Mole:{g1:'Cameron Young',g2:'Tommy Fleetwood',g3:'Si Woo Kim',captain:1}}};
+const NAME_ALIASES={'Scottie Scheffler':['Scheffler','S. Scheffler'],'Jon Rahm':['Rahm','J. Rahm'],'Xander Schauffele':['Schauffele','X. Schauffele'],'Rory McIlroy':['McIlroy','R. McIlroy'],'Ludvig Aberg':['Aberg','L. Aberg','Åberg'],'Russell Henley':['Henley','R. Henley'],'Tyrrell Hatton':['Hatton','T. Hatton'],'Collin Morikawa':['Morikawa','C. Morikawa'],'Cameron Young':['Young','C. Young'],'Tommy Fleetwood':['Fleetwood','T. Fleetwood'],'Si Woo Kim':['Si Woo Kim','S.W. Kim','Kim']};
+const DEFAULTS={masters:{Hawk:{g1:'Aberg',p1:21,g2:'Rose',p2:3,g3:'McIntyre',p3:70,captain:1},Bison:{g1:'Fitzpatrick',p1:18,g2:'DeChambeau',p2:70,g3:'McIlroy',p3:1,captain:3},Samo:{g1:'Reed',p1:12,g2:'Morikawa',p2:7,g3:'Scheffler',p3:2,captain:3},Nico:{g1:'Schauffele',p1:9,g2:'Min Woo Lee',p2:70,g3:'McIlroy',p3:1,captain:3},Mole:{g1:'Fitzpatrick',p1:18,g2:'DeChambeau',p2:70,g3:'Scheffler',p3:2,captain:3}},pga:{Hawk:null,Bison:null,Samo:null,Nico:null,Mole:null},us:{Hawk:null,Bison:null,Samo:null,Nico:null,Mole:null},open:{Hawk:null,Bison:null,Samo:null,Nico:null,Mole:null}};
+let data=JSON.parse(JSON.stringify(DEFAULTS));
+let curLb='masters',curEdit='masters',liveData=[],liveLoading=false;
+async function initSupabase(){try{const r=await sbFetch('GET','/rest/v1/scores?select=*');if(r.ok){const rows=await r.json();rows.forEach(row=>{if(data[row.major]&&PLAYERS.includes(row.player))data[row.major][row.player]=row.picks?JSON.parse(row.picks):null;});setSyncDot('on');}else throw new Error();}catch(e){loadLocal();setSyncDot('err');}renderAll();}
+async function sbFetch(m,p,b){return fetch(SUPABASE_URL+p,{method:m,headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json','Prefer':m==='POST'?'resolution=merge-duplicates':''},body:b?JSON.stringify(b):undefined});}
+async function pushToSupabase(major){const rows=PLAYERS.map(p=>({major,player:p,picks:data[major][p]?JSON.stringify(data[major][p]):null}));try{const r=await sbFetch('POST','/rest/v1/scores',rows);setSyncDot(r.ok?'on':'err');}catch(e){setSyncDot('err');}}
+function setSyncDot(s){document.getElementById('sync-dot').className='sync-dot'+(s==='on'?'':s==='err'?' err':' off');}
+function loadLocal(){try{const s=localStorage.getItem('golf2026');if(s)data=JSON.parse(s);}catch(e){}}
+function saveLocal(){try{localStorage.setItem('golf2026',JSON.stringify(data));}catch(e){}}
+function calcScore(d){if(!d||d.p1===null||d.p2===null||d.p3===null)return null;if(isNaN(d.p1)||isNaN(d.p2)||isNaN(d.p3))return null;const c=d.captain===1?d.p1:d.captain===2?d.p2:d.p3;return d.p1+d.p2+d.p3+c;}
+function makeChip(g,p,isCap){const cut=p===MISSED_CUT;const cls=isCap?'chip cap':cut?'chip cut':'chip';const ps=(p!==null&&p!=='')?'<b>'+(cut?'MC':'T'+p)+'</b>':'';return '<span class="'+cls+'">'+g+(isCap?' ©':'')+' '+ps+'</span>';}
+function renderPills(id,cur,fn){document.getElementById(id).innerHTML=MAJORS.map(m=>'<button class="pill '+(m===cur?'active':'')+'" onclick="'+fn+"('"+m+"')"+'">'+MNAMES[m]+'</button>').join('');}
+function renderLeaderboard(){renderPills('lb-pills',curLb,'switchLb');const rows=PLAYERS.map(p=>({name:p,d:data[curLb][p],score:calcScore(data[curLb][p]),fl:FREELOADERS.includes(p)})).sort((a,b)=>{if(a.score===null&&b.score===null)return 0;if(a.score===null)return 1;if(b.score===null)return -1;return a.score-b.score;});const el=document.getElementById('lb-list');if(!rows.some(r=>r.score!==null)){el.innerHTML='<div class="empty">No scores yet for '+MFULL[curLb]+'.<br>Use the Scores tab to add picks and positions.</div>';return;}el.innerHTML=rows.map((r,i)=>{const leader=i===0&&r.score!==null;const pe='<div class="lb-pos '+(leader?'gold':'')+'>'+(leader?'🏆':i+1)+'</div>';if(!r.d||r.score===null)return '<div class="lb-row">'+pe+'<div><div class="lb-name">'+r.name+(r.fl?'<span class="fl-badge">free</span>':'')+'</div><div class="lb-chips"><span style="font-size:12px;color:#7a9e7c">No picks</span></div></div><div class="lb-score-num tbd">—</div></div>';const chips=[makeChip(r.d.g1,r.d.p1,r.d.captain===1),makeChip(r.d.g2,r.d.p2,r.d.captain===2),makeChip(r.d.g3,r.d.p3,r.d.captain===3)].join('');return '<div class="lb-row '+(leader?'leader':'')+'">'+pe+'<div><div class="lb-name">'+r.name+(r.fl?'<span class="fl-badge">free</span>':'')+'</div><div class="lb-chips">'+chips+'</div></div><div><div class="lb-score-num">'+r.score+'</div><div class="lb-score-lbl">pts</div></div></div>';}).join('');document.getElementById('majors-left').textContent=4-MAJORS.filter(m=>PLAYERS.some(p=>calcScore(data[m][p])!==null)).length;}
+function switchLb(m){curLb=m;renderLeaderboard();}
+function renderOverall(){const rows=PLAYERS.map(p=>{const scores=MAJORS.map(m=>calcScore(data[m][p]));const total=scores.some(s=>s!==null)?scores.reduce((a,b)=>a+(b||0),0):null;return{name:p,scores,total,fl:FREELOADERS.includes(p)};}).sort((a,b)=>{if(a.total===null&&b.total===null)return 0;if(a.total===null)return 1;if(b.total===null)return -1;return a.total-b.total;});document.getElementById('ov-body').innerHTML=rows.map((r,i)=>{const leader=i===0&&r.total!==null;const pos=r.total!==null?(i===0?'🏆':i+1):'—';return'<tr class="'+(leader?'leader':'')+'"><td>'+pos+'</td><td>'+r.name+(r.fl?'<span class="fl-badge">free</span>':'')+'</td>'+r.scores.map(s=>'<td>'+(s!==null?s:'<span class="tbd">—</span>')+'</td>').join('')+'<td class="tot">'+(r.total!==null?r.total:'<span class="tbd">—</span>')+'</td></tr>';}).join('');}
+function matchName(a,f){return[f,...(NAME_ALIASES[f]||[])].some(x=>a.toLowerCase().includes(x.toLowerCase())||x.toLowerCase().includes(a.toLowerCase()));}
+async function fetchLive(){if(liveLoading)return;liveLoading=true;document.getElementById('live-updated').textContent='Loading...';document.getElementById('live-impact').innerHTML='<div class="loading-state"><span class="spin">⟳</span> Fetching live leaderboard...</div>';document.getElementById('live-field').innerHTML='';document.getElementById('live-field-label').style.display='none';try{const res=await fetch('https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard');if(!res.ok)throw new Error();const json=await res.json();const event=json?.events?.[0];if(!event)throw new Error('No event');const eventName=event.name||'';liveData=[];(event?.competitions?.[0]?.competitors||[]).forEach(c=>{const name=c?.athlete?.displayName||'';const posStr=c?.status?.position?.displayName||'';const statusStr=(c?.status?.type?.name||'').toLowerCase();liveData.push({name,position:parseInt(posStr.replace(/D/g,''))||0,status:statusStr.includes('cut')||statusStr.includes('wd')?'cut':'active',score:c?.score||'',posStr});});const picks=LIVE_PICKS.pga;document.getElementById('live-badge').className='live-badge';const isCut=p=>p===MISSED_CUT;const gr=(name,pos,isCap)=>'<div class="comp-golfer-row"><span class="comp-golfer-name">'+name+(isCap?'<span class="cap-label">CAP</span>':'')+'</span><span class="comp-golfer-pos '+(isCut(pos)?'cut':'')+'">'+(pos===null?'—':isCut(pos)?'MC (70)':'T'+pos+(isCap?' ×2':''))+'</span></div>';const impact=PLAYERS.map(p=>{const pd=picks[p];if(!pd)return{p,score:null,pd:null,p1:null,p2:null,p3:null};const g1l=liveData.find(l=>matchName(l.name,pd.g1));const g2l=liveData.find(l=>matchName(l.name,pd.g2));const g3l=liveData.find(l=>matchName(l.name,pd.g3));const p1=g1l?(g1l.status==='cut'?MISSED_CUT:g1l.position):null;const p2=g2l?(g2l.status==='cut'?MISSED_CUT:g2l.position):null;const p3=g3l?(g3l.status==='cut'?MISSED_CUT:g3l.position):null;const cap=pd.captain===1?p1:pd.captain===2?p2:p3;return{p,score:(p1!==null&&p2!==null&&p3!==null)?p1+p2+p3+(cap||0):null,pd,p1,p2,p3};}).sort((a,b)=>{if(a.score===null&&b.score===null)return 0;if(a.score===null)return 1;if(b.score===null)return -1;return a.score-b.score;});document.getElementById('live-impact').innerHTML='<div class="section-lbl">Current competition scores — '+eventName+'</div>'+impact.map((r,i)=>{if(!r.pd)return'';return'<div class="comp-impact"><div class="comp-impact-header"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px;font-weight:700;color:'+(i===0?'#c9a84c':'#7a9e7c')+'">'+(i===0?'🏆':i+1)+'</span><span class="comp-impact-name">'+r.p+(FREELOADERS.includes(r.p)?'<span class="fl-badge">free</span>':'')+'</span></div><span class="comp-impact-score">'+(r.score!==null?r.score+'pts':'—')+'</span></div><div class="comp-golfers">'+gr(r.pd.g1,r.p1,r.pd.captain===1)+gr(r.pd.g2,r.p2,r.pd.captain===2)+gr(r.pd.g3,r.p3,r.pd.captain===3)+'</div></div>';}).join('');const allPicks=Object.values(picks).flatMap(pd=>[pd.g1,pd.g2,pd.g3]);document.getElementById('live-field-label').style.display='block';document.getElementById('live-field').innerHTML='<table class="live-table"><thead><tr><th>Pos</th><th>Player</th><th>Score</th></tr></thead><tbody>'+liveData.slice(0,60).map(p=>{const inP=allPicks.some(n=>matchName(p.name,n));const tags=PLAYERS.filter(pl=>{const pd=picks[pl];return pd&&[pd.g1,pd.g2,pd.g3].some(n=>matchName(p.name,n));}).map(pl=>'<span class="pick-for">'+pl+'</span>').join('');return'<tr class="'+(inP?'in-picks':'')+'"><td>'+(p.status==='cut'?'MC':p.posStr||'—')+'</td><td>'+p.name+(tags?'<div class="pick-indicator">'+tags+'</div>':'')+'</td><td>'+(p.score||'—')+'</td></tr>';}).join('')+'</tbody></table>';const now=new Date();document.getElementById('live-updated').textContent='Updated '+now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');}catch(e){document.getElementById('live-impact').innerHTML='<div class="empty">Could not load live data.<br>The tournament may not be in progress.<br><br>Try again during tournament rounds.</div>';document.getElementById('live-updated').textContent='Failed to load';}liveLoading=false;}
+function renderEditPills(){renderPills('edit-pills',curEdit,'switchEdit');}
+function switchEdit(m){curEdit=m;renderEditPills();renderEditor();}
+function renderEditor(){document.getElementById('editor-form').innerHTML=PLAYERS.map(p=>{const d=data[curEdit][p]||{g1:'',p1:'',g2:'',p2:'',g3:'',p3:'',captain:1};const co=[1,2,3].map(n=>'<option value="'+n+'"'+(d.captain==n?' selected':'')+'>G'+n+'</option>').join('');return'<div class="ed-player"><div class="ed-hdr"><span class="ed-name">'+p+(FREELOADERS.includes(p)?'<span class="fl-badge">free</span>':'')+'</span><div class="cap-wrap">Cap: <select id="'+p+'-cap">'+co+'</select></div></div><div class="ed-lbl">Golfer 1 &nbsp; Position</div><div class="ed-row"><input class="finput" id="'+p+'-g1" value="'+(d.g1||'')+'" placeholder="Name" /><input class="finput pos" id="'+p+'-p1" type="number" value="'+(d.p1!==null&&d.p1!==''?d.p1:'')+'" placeholder="e.g. 5" /></div><div class="ed-lbl">Golfer 2 &nbsp; Position</div><div class="ed-row"><input class="finput" id="'+p+'-g2" value="'+(d.g2||'')+'" placeholder="Name" /><input class="finput pos" id="'+p+'-p2" type="number" value="'+(d.p2!==null&&d.p2!==''?d.p2:'')+'" placeholder="e.g. 14" /></div><div class="ed-lbl">Golfer 3 &nbsp; Position</div><div class="ed-row"><input class="finput" id="'+p+'-g3" value="'+(d.g3||'')+'" placeholder="Name" /><input class="finput pos" id="'+p+'-p3" type="number" value="'+(d.p3!==null&&d.p3!==''?d.p3:'')+'" placeholder="70 = MC" /></div></div>';}).join('');}
+async function saveScores(){PLAYERS.forEach(p=>{const g1=(document.getElementById(p+'-g1')?.value||'').trim();const g2=(document.getElementById(p+'-g2')?.value||'').trim();const g3=(document.getElementById(p+'-g3')?.value||'').trim();const p1=parseInt(document.getElementById(p+'-p1')?.value);const p2=parseInt(document.getElementById(p+'-p2')?.value);const p3=parseInt(document.getElementById(p+'-p3')?.value);const cap=parseInt(document.getElementById(p+'-cap')?.value)||1;if(g1||g2||g3)data[curEdit][p]={g1,p1:isNaN(p1)?null:p1,g2,p2:isNaN(p2)?null:p2,g3,p3:isNaN(p3)?null:p3,captain:cap};});saveLocal();await pushToSupabase(curEdit);renderLeaderboard();renderOverall();showToast('Saved ✓');}
+function showTab(id,btn){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');if(btn)btn.classList.add('active');if(id==='overall')renderOverall();if(id==='scores'){renderEditPills();renderEditor();}if(id==='live')fetchLive();}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+function renderAll(){renderLeaderboard();renderOverall();}
+setInterval(()=>{if(document.getElementById('tab-live').classList.contains('active'))fetchLive();},180000);
+renderEditPills();renderEditor();initSupabase();
 </script>
-
-<!--
-=================================================================
-  HOW TO SET UP LIVE SYNC (takes about 5 minutes, free)
-=================================================================
-
-1. Go to supabase.com and create a free account + new project.
-   Name it anything (e.g. "golf-majors"). Note your project password.
-
-2. Once your project loads, go to the SQL Editor (left sidebar).
-   Paste and run this SQL to create the scores table:
-
-   create table scores (
-     major text not null,
-     player text not null,
-     picks text,
-     updated_at timestamptz default now(),
-     primary key (major, player)
-   );
-
-   alter table scores enable row level security;
-
-   create policy "Public read" on scores
-     for select using (true);
-
-   create policy "Public write" on scores
-     for insert with check (true);
-
-   create policy "Public update" on scores
-     for update using (true);
-
-3. Go to Project Settings > API.
-   Copy your "Project URL" and "anon public" key.
-
-4. Open this HTML file in a text editor.
-   At the top of the file, replace:
-     YOUR_SUPABASE_URL  → paste your Project URL
-     YOUR_SUPABASE_ANON_KEY → paste your anon key
-   Also change ADMIN_PIN to whatever you want (default is 1234).
-
-5. Save the file. Upload it to GitHub Pages as index.html.
-   Share the URL — everyone will see live score updates.
-
-The green dot in the top-right of the app shows sync is working.
-=================================================================
--->
 </body>
 </html>
