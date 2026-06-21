@@ -137,19 +137,7 @@ const LIVE_PICKS={
     Mole:{g1:'Jon Rahm',g2:'Tommy Fleetwood',g3:'Scottie Scheffler',captain:1}
   }
 };
-const NAME_ALIASES={
-  'Scottie Scheffler':['Scheffler','S. Scheffler'],
-  'Jon Rahm':['Rahm','J. Rahm'],
-  'Xander Schauffele':['Schauffele','X. Schauffele'],
-  'Rory McIlroy':['McIlroy','R. McIlroy'],
-  'Ludvig Aberg':['Aberg','L. Aberg','Åberg'],
-  'Russell Henley':['Henley','R. Henley'],
-  'Tyrrell Hatton':['Hatton','T. Hatton'],
-  'Collin Morikawa':['Morikawa','C. Morikawa'],
-  'Cameron Young':['Young','C. Young'],
-  'Tommy Fleetwood':['Fleetwood','T. Fleetwood'],
-  'Si Woo Kim':['Si Woo Kim','S.W. Kim','Kim'],
-  'Justin Thomas':['Thomas','J. Thomas','J.T.']
+const NAME_ALIASES={'Scottie Scheffler':['Scottie Scheffler'],'Jon Rahm':['Jon Rahm'],'Xander Schauffele':['Xander Schauffele'],'Rory McIlroy':['Rory McIlroy'],'Ludvig Aberg':['Ludvig Aberg','Ludvig Åberg'],'Tommy Fleetwood':['Tommy Fleetwood'],'Collin Morikawa':['Collin Morikawa'],'Justin Thomas':['Justin Thomas']};
 };
 const DEFAULTS={masters:{Hawk:{g1:'Aberg',p1:21,g2:'Rose',p2:3,g3:'McIntyre',p3:70,captain:1},Bison:{g1:'Fitzpatrick',p1:70,g2:'DeChambeau',p2:70,g3:'McIlroy',p3:1,captain:3},Samo:{g1:'Reed',p1:12,g2:'Morikawa',p2:7,g3:'Scheffler',p3:2,captain:3},Nico:{g1:'Schauffele',p1:10,g2:'Min Woo Lee',p2:70,g3:'McIlroy',p3:1,captain:3},Mole:{g1:'Fitzpatrick',p1:70,g2:'DeChambeau',p2:70,g3:'Scheffler',p3:2,captain:3}},pga:{Hawk:{g1:'Scottie Scheffler',p1:14,g2:'Jon Rahm',p2:2,g3:'Xander Schauffele',p3:7,captain:1},Bison:{g1:'Rory McIlroy',p1:7,g2:'Ludvig Aberg',p2:4,g3:'Russell Henley',p3:70,captain:1},Samo:{g1:'Scottie Scheffler',p1:14,g2:'Xander Schauffele',p2:7,g3:'Ludvig Aberg',p3:4,captain:1},Nico:{g1:'Scottie Scheffler',p1:14,g2:'Tyrrell Hatton',p2:70,g3:'Collin Morikawa',p3:55,captain:1},Mole:{g1:'Cameron Young',p1:26,g2:'Tommy Fleetwood',p2:70,g3:'Si Woo Kim',p3:35,captain:1}},us:{Hawk:null,Bison:null,Samo:null,Nico:null,Mole:null},open:{Hawk:null,Bison:null,Samo:null,Nico:null,Mole:null}};
 let data=JSON.parse(JSON.stringify(DEFAULTS)),curLb='masters',curEdit='masters',liveData=[],liveLoading=false;
